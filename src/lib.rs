@@ -49,9 +49,33 @@ pub fn set_for_current(core_id: CoreId) {
 }
 
 /// This represents a CPU core.
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct CoreId {
     id: usize,
+}
+
+impl CoreId {
+    pub fn new(id: usize) -> Result<CoreId, String> {
+        let len = match get_core_ids() {
+            Some(vec) => vec.len(),
+            None => 0,
+        };
+        if id < len {
+            let mut core_id = CoreId {id: id};
+            core_id.set_id(id);
+            Ok(core_id)
+        } else {
+            Err(format!("Invalid id core. This system has {} core(s).", len))
+        }
+    }
+
+    pub fn set_id(&mut self, cid: usize) {
+        self.id = cid;
+    }
+
+    pub fn get_id(&mut self) -> usize{
+        self.id
+    }
 }
 
 // Linux Section
