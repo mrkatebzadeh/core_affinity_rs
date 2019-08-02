@@ -73,7 +73,7 @@ impl CoreId {
         self.id = cid;
     }
 
-    pub fn get_id(&mut self) -> usize{
+    pub fn get_id(&self) -> usize{
         self.id
     }
 }
